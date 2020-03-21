@@ -1,4 +1,5 @@
-import random, string
+import random, string, math
+#math.ceil(4.2) -> 5
 def randomAlphabet(incomingList):#Creates a randomized alphabet any time I need
     for i in range(26):
         tempLocation = random.randint(0,25)
@@ -80,24 +81,58 @@ def caesarAtBashDecrypt(encryptedText):
     message = caesarDecrypt(atBashDecrypt(caesarDecrypt(encryptedText, (len(encryptedText)*2))), len(encryptedText))
     return message
 
-def boxShiftUpEncrypt(message, key):
-    box = []
+def buildBox(message, key):
+    box = [[]]
     counter = 0
     for i in range(len(key)):
-        box.append([])
+        box[0].append([])
     for i in range(len(message)):
-        pass
+        column = (i % len(key))
+        #print("" + str(counter) + "  " + str(column) + " " + str(message[i]))
+        box[counter][column].append(message[i])
+        if (column == (len(key)-1)):
+            counter += 1
+            box.append([])
+            for j in range(len(key)):
+                box[counter].append([])
+    for z in range(len(key)-len(message)%len(key)):
+        box[counter][z+(len(key)-len(message)%len(key))-1].append(" ")
     return box
+
+def destroyBox(box, key):
+    message = ''
+    for i in range(len(box)):
+        for j in box[i]:
+            message += str(j)
+    weirdMessage = message
+    message = ''
+    message += weirdMessage[2]
+    counter = 0
+    for i in range(len(weirdMessage)):
+        if i > 1:
+            if counter == 5:
+                message += weirdMessage[i]
+                counter = 0
+            counter +=1
+    return message
+
+def printBox(box):
+    for i in range(len(box)):
+        print(box[i])
+
     
 def mainMethod():
     plainText = "I came, I saw, I conquered!"
-    e = caesarAtBashEncrypt(plainText)
+    '''e = caesarAtBashEncrypt(plainText)
     e1 = caesarAtBashDecrypt(e)
     print(plainText)
     print(e)
-    print(e1)
-    print(boxShiftUpEncrypt("hello", "pie"))
-
+    print(e1)'''
+    x = buildBox(plainText, "Lemon")
+    printBox(x)
+    y = destroyBox(x, "lemon")
+    print(y)
+    print(type(y))
 
 
 
