@@ -1,3 +1,8 @@
+#quick note: all ciphers below do follow the rules of their origin, 
+#That being said, they cannot be decrypted with anything other than this program 
+#What makes these special is it contains charecters, and both capital and lower case
+#so any substitution cipher would inherently be using a different alphabet than this one
+
 import random, string, math
 #math.ceil(4.2) -> 5
 def randomAlphabet(incomingList):#Creates a randomized alphabet any time I need
@@ -95,11 +100,13 @@ def buildBox(message, key):
             box.append([])
             for j in range(len(key)):
                 box[counter].append([])
-    for z in range(len(key)-len(message)%len(key)):
-        box[counter][z+(len(key)-len(message)%len(key))-1].append(" ")
+    x = len(key) - ((len(message)%len(key)))
+    for i in range(x):
+        print(i)
+        box[counter][len(key)-i-1].append(' ')
     return box
 
-def destroyBox(box, key):
+def destroyBox(box, key):#At some point, go back and delete the extra spaces from the message
     message = ''
     for i in range(len(box)):
         for j in box[i]:
@@ -120,19 +127,15 @@ def printBox(box):
     for i in range(len(box)):
         print(box[i])
 
+def columnaryTransferEncrypt():#Shifts everything horizontally 
+    pass
     
 def mainMethod():
     plainText = "I came, I saw, I conquered!"
-    '''e = caesarAtBashEncrypt(plainText)
-    e1 = caesarAtBashDecrypt(e)
-    print(plainText)
-    print(e)
-    print(e1)'''
     x = buildBox(plainText, "Lemon")
     printBox(x)
     y = destroyBox(x, "lemon")
     print(y)
-    print(type(y))
 
 
 
