@@ -102,7 +102,6 @@ def buildBox(message, key):
                 box[counter].append([])
     x = len(key) - ((len(message)%len(key)))
     for i in range(x):
-        print(i)
         box[counter][len(key)-i-1].append(' ')
     return box
 
@@ -127,15 +126,23 @@ def printBox(box):
     for i in range(len(box)):
         print(box[i])
 
-def columnaryTransferEncrypt():#Shifts everything horizontally 
-    pass
-    
+def columnaryTransferEncrypt(message, key):#Shifts everything horizontally 
+    box = buildBox(message, key)
+    for i in range(len(key)):#Repeats a set number of times
+         for j in range(len(box)):#loops through lists of lists
+             print(box[j][0])
+             #print(box[j][len(box[j]-1)])
+             #print("hi")
+             #box[j].insert(movingLetter, 0)
+    box = destroyBox(box,key)
+    return box
 def mainMethod():
     plainText = "I came, I saw, I conquered!"
-    x = buildBox(plainText, "Lemon")
+    '''x = buildBox(plainText, "Lemon")
     printBox(x)
     y = destroyBox(x, "lemon")
-    print(y)
+    print(y)'''
+    print(columnaryTransferEncrypt(plainText, "Lemom"))
 
 
 
